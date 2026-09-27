@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Für meine Traumfrau ❤️</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; text-align: center; background-color: #ffe6e6; padding: 50px; }
+        .card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: inline-block; max-width: 400px; }
+        h2 { color: #ff4d6d; }
+        button { font-size: 18px; padding: 10px 20px; margin: 10px; border: none; border-radius: 8px; cursor: pointer; }
+        .btn-yes { background-color: #4caf50; color: white; }
+        .btn-no { background-color: #f44336; color: white; position: absolute; }
+        .btn-normal { background-color: #ff4d6d; color: white; position: static; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <!-- Frage 1 -->
+    <div id="q1">
+        <h2>Frage 1: Liebst du mich noch wie am ersten Tag?</h2>
+        <button class="btn-normal" onclick="nextQuestion(1, 2)">Ja, natürlich! ❤️</button>
+        <button class="btn-normal" onclick="nextQuestion(1, 2)">Noch viel mehr! 🥰</button>
+    </div>
+
+    <!-- Frage 2 (Die finale Frage mit dem Weglauf-Button) -->
+    <div id="q2" class="hidden">
+        <h2>Frage 2: Gehst du heute Abend mit mir schick essen? 🕒</h2>
+        <button class="btn-yes" onclick="showLove()">JA! 🥂</button>
+        <button class="btn-no" id="noBtn" onmouseover="runAway()" onclick="runAway()">Nein 😢</button>
+    </div>
+
+    <!-- Erfolgseite -->
+    <div id="success" class="hidden">
+        <h2>Juchhuuu! Aber du hattest eh keine Wahl! 😜❤️</h2>
+        <p>Ich hole dich um 19:00 Uhr ab. Freu dich drauf!</p>
+    </div>
+</div>
+
+<script>
+    function nextQuestion(current, next) {
+        document.getElementById('q' + current).classList.add('hidden');
+        document.getElementById('q' + next).classList.remove('hidden');
+        
+        // Platziert den Nein-Button erst einmal sichtbar in die Nähe, sobald Frage 2 geladen wird
+        if(next === 2) {
+            let noBtn = document.getElementById('noBtn');
+            noBtn.style.top = "55%";
+            noBtn.style.left = "52%";
+        }
+    }
+
+    function runAway() {
+        let btn = document.getElementById('noBtn');
+        // Generiert zufällige Positionen auf dem Bildschirm
+        let x = Math.random() * (window.innerWidth - btn.clientWidth - 50);
+        let y = Math.random() * (window.innerHeight - btn.clientHeight - 50);
+        
+        btn.style.left = x + 'px';
+        btn.style.top = y + 'px';
+    }
+
+    function showLove() {
+        document.getElementById('q2').classList.add('hidden');
+        document.getElementById('success').classList.remove('hidden');
+    }
+</script>
+
+</body>
+</html>
