@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Für meine Traumfrau ❤️</title>
     <style>
-        body { font-family: 'Arial', sans-serif; text-align: center; background-color: #ffe6e6; padding: 50px; }
-        .card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: inline-block; max-width: 400px; }
-        h2 { color: #ff4d6d; }
-        button { font-size: 18px; padding: 10px 20px; margin: 10px; border: none; border-radius: 8px; cursor: pointer; }
-        .btn-yes { background-color: #4caf50; color: white; }
-        .btn-no { background-color: #f44336; color: white; position: absolute; }
-        .btn-normal { background-color: #ff4d6d; color: white; position: static; }
+        body { font-family: 'Arial', sans-serif; text-align: center; background-color: #ffe6e6; padding: 30px; }
+        .card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: inline-block; width: 90%; max-width: 450px; margin-top: 50px; }
+        h2 { color: #ff4d6d; line-height: 1.4; }
+        button { font-size: 16px; padding: 12px 20px; margin: 10px; border: none; border-radius: 8px; cursor: pointer; transition: background 0.2s; }
+        .btn-yes { background-color: #4caf50; color: white; display: block; width: 100%; box-sizing: border-box; }
+        .btn-no { background-color: #f44336; color: white; position: absolute; z-index: 999; }
+        .btn-normal { background-color: #ff4d6d; color: white; display: block; width: 100%; }
         .hidden { display: none; }
     </style>
 </head>
@@ -25,17 +25,31 @@
         <button class="btn-normal" onclick="nextQuestion(1, 2)">Noch viel mehr! 🥰</button>
     </div>
 
-    <!-- Frage 2 (Die finale Frage mit dem Weglauf-Button) -->
+    <!-- Frage 2 -->
     <div id="q2" class="hidden">
-        <h2>Frage 2: Gehst du heute Abend mit mir schick essen? 🕒</h2>
-        <button class="btn-yes" onclick="showLove()">JA! 🥂</button>
-        <button class="btn-no" id="noBtn" onmouseover="runAway()" onclick="runAway()">Nein 😢</button>
+        <h2>Frage 2: Wie sehr liebst du mich?</h2>
+        <button class="btn-yes" onclick="nextQuestion(2, 3)">أحبك، وأموت من أجلك، وأتنفس لأجلك.</button>
+        <button class="btn-no" id="noBtn2" onmouseover="runAway('noBtn2')" onclick="runAway('noBtn2')">أحبك</button>
+    </div>
+
+    <!-- Frage 3 -->
+    <div id="q3" class="hidden">
+        <h2>Frage 3: Freust du dich auf unser Date am 10.10? 🕒</h2>
+        <button class="btn-yes" onclick="nextQuestion(3, 4)">JAAA ICH FREUE MICH SEHR DICH ZU SEHEN</button>
+        <button class="btn-no" id="noBtn3" onmouseover="runAway('noBtn3')" onclick="runAway('noBtn3')">ja tu ich</button>
+    </div>
+
+    <!-- Frage 4 -->
+    <div id="q4" class="hidden">
+        <h2>Frage 4: Verzeihst du mir meinen Fehler? 🥺</h2>
+        <button class="btn-yes" onclick="showLove()">ja habibi ich liebe dich. ich will dir vertrauen können</button>
+        <button class="btn-no" id="noBtn4" onmouseover="runAway('noBtn4')" onclick="runAway('noBtn4')">ja nerv nicht</button>
     </div>
 
     <!-- Erfolgseite -->
     <div id="success" class="hidden">
-        <h2>Juchhuuu! Aber du hattest eh keine Wahl! 😜❤️</h2>
-        <p>Ich hole dich um 19:00 Uhr ab. Freu dich drauf!</p>
+        <h2>Danke mein Schatz! Du hast mir alle Fragen perfekt beantwortet! 😜❤️</h2>
+        <p>Ich liebe dich auch. Ich freue mich unendlich auf den 10.10.!</p>
     </div>
 </div>
 
@@ -44,26 +58,34 @@
         document.getElementById('q' + current).classList.add('hidden');
         document.getElementById('q' + next).classList.remove('hidden');
         
-        // Platziert den Nein-Button erst einmal sichtbar in die Nähe, sobald Frage 2 geladen wird
-        if(next === 2) {
-            let noBtn = document.getElementById('noBtn');
-            noBtn.style.top = "55%";
-            noBtn.style.left = "52%";
-        }
+        // Initialisiert die Positionen der weglaufenden Buttons, sobald die Frage erscheint
+        if(next === 2) { resetBtnPosition('noBtn2'); }
+        if(next === 3) { resetBtnPosition('noBtn3'); }
+        if(next === 4) { resetBtnPosition('noBtn4'); }
     }
 
-    function runAway() {
-        let btn = document.getElementById('noBtn');
-        // Generiert zufällige Positionen auf dem Bildschirm
-        let x = Math.random() * (window.innerWidth - btn.clientWidth - 50);
-        let y = Math.random() * (window.innerHeight - btn.clientHeight - 50);
+    function resetBtnPosition(id) {
+        let btn = document.getElementById(id);
+        btn.style.top = "60%";
+        btn.style.left = "45%";
+    }
+
+    function runAway(id) {
+        let btn = document.getElementById(id);
+        // Lässt den Button zufällig über den Bildschirm springen
+        let x = Math.random() * (window.innerWidth - btn.clientWidth - 60);
+        let y = Math.random() * (window.innerHeight - btn.clientHeight - 60);
         
+        // Verhindert, dass der Button außerhalb des sichtbaren Bereichs oben/links landet
+        if(x < 20) x = 20;
+        if(y < 20) y = 20;
+
         btn.style.left = x + 'px';
         btn.style.top = y + 'px';
     }
 
     function showLove() {
-        document.getElementById('q2').classList.add('hidden');
+        document.getElementById('q4').classList.add('hidden');
         document.getElementById('success').classList.remove('hidden');
     }
 </script>
